@@ -9,7 +9,7 @@ namespace Practice__7
         private static string[] menuStrings =
         {
             "Самодвойственные функции от трёх аргументов:", "Вывести таблицы истинности",
-            "Вывести вектора в лексикографическом порядке"
+            "Вывести вектора в лексикографическом порядке", "Проверить вектор функции на самодвойственность"
         };
         private static Menu mainMenu = new Menu(menuStrings);
         private static bool status = true;
@@ -34,6 +34,20 @@ namespace Practice__7
                         Console.Clear();
                         Console.WriteLine("Векторы самодвойственных функций от трёх аргументов в лексикографическом порядке:\n");
                         Print(vectors);
+                        Get.Wait();
+                        break;
+
+                    case ConsoleKey.NumPad3:
+                    case ConsoleKey.D3:
+                        Console.Clear();
+                        try
+                        {
+                            Console.WriteLine("\nЗаданный вектор представляет {0} функцию.\n", IsDouble(Get.String("Введите вектор функции: ")) ? "самодвойственную" : "несамодвойственную");
+                        }
+                        catch (ArgumentException error)
+                        {
+                            Console.WriteLine("\n" + error.Message + "\n");
+                        }
                         Get.Wait();
                         break;
 
@@ -112,6 +126,19 @@ namespace Practice__7
                 Console.WriteLine(vector);
             }
             Console.WriteLine();
+        }
+        /// <summary>
+        /// Проверяет заданный вектор на самодвойственность.
+        /// </summary>
+        /// <param name="vector">Входной вектор.</param>
+        /// <returns></returns>
+        private static bool IsDouble(string vector)
+        {
+            if(vector.Length != 8)
+                throw new ArgumentException("Вектор должен содержать 8 значений.");
+            if (vector[0] == vector[7] && vector[1] == vector[6] && vector[2] == vector[5] && vector[3] == vector[4])
+                return true;
+            return false;
         }
     }
 }
